@@ -1,5 +1,5 @@
 ;;; init.el --- -*- lexical-binding: t -*-
-;;  Author: Ian Y.E. Pan
+;;  Author: Ian Y.E. Pan (cleanforked and customized by Jarl André Hübenthal)
 ;;; Commentary:
 ;;  This is my personal Emacs configuration
 ;;; Code:
@@ -49,7 +49,7 @@
     (split-window-right)
     (other-window 1))
   :config
-  (setq user-full-name "Ian Y.E. Pan")
+  (setq user-full-name "Jarl André Hübenthal")
   (setq frame-title-format '("Emacs " emacs-version))
   (setq ring-bell-function 'ignore)
   (setq-default default-directory "~/")
@@ -395,22 +395,6 @@ This follows the UX design of Visual Studio Code."
 
 ;;; Third-party Packages
 
-;; GUI enhancements
-
-;; (use-package vscode-dark-plus-theme
-;;   :config
-;;   (load-theme 'vscode-dark-plus t))
-
-;; (add-to-list 'custom-theme-load-path (concat user-emacs-directory "themes/"))
-;; (load-theme 'default-light t)
-
-;; (use-package spacemacs-common
-;;   :ensure spacemacs-theme
-;;   :custom-face
-;;   (region ((t (:extend nil))))
-;;   :config
-;;   (load-theme 'spacemacs-light t))
-
 (use-package doom-themes
   :custom-face
   (region                         ((t (:extend nil))))
@@ -598,16 +582,6 @@ This follows the UX design of Visual Studio Code."
   :config
   (company-prescient-mode +1))
 
-;; Programming support and utilities
-
-;; (add-to-list 'load-path (concat user-emacs-directory "lsp-bridge/"))
-;; (use-package yasnippet)
-;; (require 'lsp-bridge)
-;; (global-lsp-bridge-mode)
-;; (define-key acm-mode-map (kbd "<tab>") #'acm-select-next)
-;; (define-key acm-mode-map (kbd "TAB") #'acm-select-next)
-;; (define-key acm-mode-map (kbd "<backtab>") #'acm-select-prev)
-
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -703,22 +677,6 @@ This follows the UX design of Visual Studio Code."
   :init (when (executable-find "python3")
           (setq lsp-pyright-python-executable-cmd "python3")))
 
-;; (use-package tree-sitter
-;;   :after tree-sitter-langs
-;;   :custom-face
-;;   (tree-sitter-hl-face:property         ((t (:slant normal))))
-;;   (tree-sitter-hl-face:method.call      ((t (:inherit font-lock-function-name-face))))
-;;   (tree-sitter-hl-face:function.call    ((t (:inherit font-lock-function-name-face))))
-;;   (tree-sitter-hl-face:function.builtin ((t (:inherit font-lock-function-name-face))))
-;;   (tree-sitter-hl-face:operator         ((t (:inherit default))))
-;;   (tree-sitter-hl-face:type.builtin     ((t (:inherit font-lock-type-face))))
-;;   (tree-sitter-hl-face:number           ((t (:inherit highlight-numbers-number))))
-;;   :config
-;;   (global-tree-sitter-mode)
-;;   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-
-;; (use-package tree-sitter-langs)
-
 (use-package pyvenv
   :config
   (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name ("[venv:" pyvenv-virtual-env-name "] ")))
@@ -810,45 +768,6 @@ This follows the UX design of Visual Studio Code."
 
 (use-package yaml-mode)
 
-;; (use-package haskell-mode)
-
-;; (use-package rjsx-mode
-;;   :mode ("\\.jsx?\\'" . rjsx-mode)
-;;   :custom-face
-;;   (js2-error   ((t (:inherit default :underscore nil))))
-;;   (js2-warning ((t (:inherit default :underscore nil))))
-;;   :config
-;;   (define-key rjsx-mode-map "<" nil)
-;;   (define-key rjsx-mode-map (kbd "C-d") nil)
-;;   (define-key rjsx-mode-map ">" nil))
-
-;; (use-package web-mode
-;;   :mode (("\\.html?\\'" . web-mode)
-;;          ("\\.css\\'"   . web-mode)
-;;          ("\\.jsx?\\'"  . web-mode)
-;;          ("\\.tsx?\\'"  . web-mode)
-;;          ("\\.json\\'"  . web-mode))
-;;   :config
-;;   (setq web-mode-markup-indent-offset ian/indent-width)
-;;   (setq web-mode-code-indent-offset ian/indent-width)
-;;   (setq web-mode-css-indent-offset ian/indent-width)
-;;   (setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'"))))
-
-;; (use-package emmet-mode
-;;   :hook ((html-mode
-;;           css-mode
-;;           js-mode
-;;           js-jsx-mode
-;;           typescript-mode
-;;           web-mode
-;;           ) . emmet-mode)
-;;   :config
-;;   (setq emmet-insert-flash-time 0.001) ; effectively disabling it
-;;   (add-hook 'js-jsx-mode-hook #'(lambda ()
-;;                                   (setq-local emmet-expand-jsx-className? t)))
-;;   (add-hook 'web-mode-hook #'(lambda ()
-;;                                (setq-local emmet-expand-jsx-className? t))))
-
 (use-package cpp-auto-include ; Copyright (C) 2015 by Syohei Yoshida / Ben Deane
   :bind (:map c++-mode-map ("C-c i" . cpp-auto-include/ensure-includes-for-file)))
 
@@ -884,26 +803,6 @@ This follows the UX design of Visual Studio Code."
   (add-to-list 'hl-todo-keyword-faces '("WHY" . "#7cb8bb"))
   (global-hl-todo-mode +1))
 
-;; (use-package processing-mode
-;;   :after company
-;;   :preface
-;;   (defvar processing-company--keywords
-;;     (with-eval-after-load 'processing-mode
-;;       (cons 'processing-mode (append processing-functions
-;;                                      processing-builtins
-;;                                      processing-constants))))
-;;   (defun processing-company--init ()
-;;     (setq-local company-backends '((company-keywords
-;;                                     :with
-;;                                     company-yasnippet
-;;                                     company-dabbrev-code)))
-;;     (make-local-variable 'company-keywords-alist)
-;;     (add-to-list 'company-keywords-alist processing-company--keywords))
-;;   :config
-;;   (add-hook 'processing-mode-hook 'processing-company--init)
-;;   (setq processing-sketchbook-dir (format "%s/Projects/Processing/sketchbooks" (getenv "HOME")))
-;;   (setq processing-location (format "%s/processing-3.5.4/processing-java" (getenv "HOME"))))
-
 ;; Dired enhancements
 
 (use-package dired
@@ -932,42 +831,6 @@ This follows the UX design of Visual Studio Code."
   (define-key ranger-mode-map (kbd "R") #'dired-do-rename)
   (define-key ranger-mode-map (kbd "C") #'dired-do-copy)
   (define-key ranger-mode-map (kbd "C-h") nil))
-
-;; Terminal integration
-
-;; (use-package vterm
-;;   :hook (vterm-mode . (lambda ()
-;;                         (setq-local global-hl-line-mode nil)
-;;                         (setq-local line-spacing nil)))
-;;   :preface
-;;   (defun ian/new-vterm-instance ()
-;;     (interactive)
-;;     (vterm t))
-;;   :config
-;;   (setq vterm-disable-bold t)
-;;   (setq vterm-timer-delay 0.01)
-;;   (with-eval-after-load 'evil
-;;     (evil-set-initial-state 'vterm-mode 'emacs))
-;;   (define-key vterm-mode-map (kbd "C-l") #'(lambda ()
-;;                                              (interactive)
-;;                                              (vterm-clear)
-;;                                              (vterm-clear-scrollback))))
-
-;; (use-package vterm-toggle
-;;   :after (projectile vterm evil)
-;;   :config
-;;   (setq vterm-toggle-fullscreen-p nil)
-;;   (setq vterm-toggle-scope 'project)
-;;   (add-to-list 'display-buffer-alist
-;;                '((lambda(bufname _) (with-current-buffer bufname
-;;                                       (or (equal major-mode 'vterm-mode)
-;;                                           (string-prefix-p vterm-buffer-name bufname))))
-;;                  (display-buffer-reuse-window display-buffer-at-bottom)
-;;                  (direction . bottom)
-;;                  (dedicated . t)
-;;                  (reusable-frames . visible)
-;;                  (window-height . 0.5)))
-;;   (global-set-key (kbd "C-`") #'vterm-toggle))
 
 ;; Misc
 
